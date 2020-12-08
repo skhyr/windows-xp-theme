@@ -1,0 +1,193 @@
+[colors]
+background = #225dd7
+background-alt = #3a89ec
+foreground = #ffffff
+foreground-alt = #dddddd
+primary = #ffffff
+secondary = #ffffff
+alert = #ffffff
+windowsGreen = #52b550
+
+[bar/top]
+width = 100%
+height = 35
+bottom = true
+
+background = ${colors.background}
+foreground = ${colors.foreground}
+
+border-top-size = 4
+border-bottom-size = 0
+border-color = ${colors.background}
+border-top-color = #4575d9
+
+modules-left = start round-right-green i3
+modules-center =
+modules-right = time sep spotify pulseaudio sep battery lastSpace
+
+module-margin = 0
+
+font-0 = Source Code Pro Medium:pixelsize=10
+font-1 = Roboto:style=bold:size=15;2
+font-2 = FontAwesome:pixelsize=10;0
+font-3 = FontAwesome:pixelsize=14;1
+font-4 = "JetBrainsMono Nerd Font:size=60;15"
+
+tray-detach = false
+tray-offset-x = 0
+tray-offset-y = 0
+tray-position = right
+tray-padding = 5
+tray-background = ${colors.background-alt}
+tray-radius = 5
+
+[module/i3]
+type = internal/i3
+format = <label-state> <label-mode>
+index-sort = false
+wrapping-scroll = false
+
+ws-icon-0 = "Internet Explorer;"
+ws-icon-1 = "CMD;"
+ws-icon-2 = "Notepad;"
+ws-icon-3 = "Music;"
+ws-icon-default = 
+
+
+label-focused = %icon% %name%
+label-focused-background = ${colors.background-alt} 
+label-focused-underline = #6b92e3
+label-focused-padding = 2
+label-focused-margin = 1
+
+label-unfocused = %icon% %name%
+label-unfocused-padding = 2
+label-unfocused-margin = 1
+
+label-visible = %icon% %name%
+label-visible-background = ${self.label-focused-background}
+label-visible-underline = ${self.label-focused-underline}
+label-visible-padding = ${self.label-focused-padding}
+label-visible-margin = 1
+
+label-urgent = %icon% %name%
+label-urgent-background = #d7b912
+label-urgent-padding = ${self.label-focused-padding}
+label-urgent-margin = 1
+
+
+[module/time]
+type = custom/script
+exec = date +"%H:%M %a %d %b"
+interval = 1
+
+
+[module/start]
+type = custom/text
+
+content = "    %{T4}   %{T2}Start"
+content-foreground = #ffffff
+content-background = ${colors.windowsGreen}
+padding-left = 4
+click-left = ~/.poweroff.AppImage
+
+
+[module/battery]
+type = internal/battery
+battery = BAT0
+adapter = AC0
+full-at = 75 
+
+format-charging = <animation-charging>
+format-charging-foreground = ${colors.foreground-alt}
+
+format-discharging-prefix = " "
+format-discharging = <label-discharging>
+
+format-full-foreground = ${colors.foreground-alt}
+label-full = "" 
+format-full = <label-full>
+
+ramp-capacity-1 = 
+ramp-capacity-2 = 
+ramp-capacity-3 = 
+
+ramp-capacity-foreground = ${colors.foreground}
+
+animation-charging-0 = 
+animation-charging-1 =  
+animation-charging-2 = 
+animation-charging-foreground = ${colors.foreground}
+animation-charging-framerate = 750
+
+
+
+
+[module/wlan]
+type = custom/script
+exec = iwgetid -r
+interval = 2
+format-prefix = " "
+
+[module/wlan1]
+type = internal/network
+interface = wlp3s0
+
+
+
+[module/brightness]
+type= custom/script
+exec = ~/.scripts/getbrightness
+interval = 2
+
+
+
+
+[module/memory]
+type = internal/memory
+format = <label> 
+label = %percentage_used%
+
+[module/cpu]
+type = internal/cpu
+format = <label>
+label = %percentage%
+
+[module/pulseaudio]
+type = internal/pulseaudio
+format-volume = <label-volume> 
+label-volume =   %percentage%%
+label-volume-foreground = ${root.foreground}
+label-muted = mute
+label-muted-foreground = #666
+
+[module/spotify]
+type = custom/script
+interval = 5
+format-prefix = " "
+format = <label>
+exec = python ~/.scripts/spotifyModule -t 22  -f '{artist}: {song}'
+format-underline = #1db954
+
+[module/rounded]
+type = custom/text
+content = %{T%}%{T-}
+content-foreground = ${colors.background-alt}
+
+[module/lastSpace]
+type = custom/text
+content = " "
+
+[module/sep]
+type = custom/text
+content = "   "
+
+[module/round-left-green]
+type = custom/text
+content = %{T5}%{T-}
+content-foreground = ${colors.windowsGreen}
+
+[module/round-right-green]
+type = custom/text
+content = %{T5}%{T-}
+content-foreground = ${colors.windowsGreen}
